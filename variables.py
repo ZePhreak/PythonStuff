@@ -26,13 +26,13 @@ DHA = 550
 DetA = 130 
 SSA = 130 
 TNCA = 100 
-#While Loop Variables
+#While loop variables
 stats = [ "Determination", "Crit", "Direct Hit" ] 
 stat_flags = [True, True, True]
 det_data1 = 1
 crit_data1 = 1
 direct_data1 = 1
-#Multiply Section 
+#Multiplier section 
 DetMult = (1000 + floor((SSA * (p_det - basemain)) / jobmod )) / 1000 
 DirectChance = floor( p_direct - basesub) / 39.09 * 0.01 
 DirectMult = (DirectChance * 1.25 + (1 - DirectChance)) 
@@ -50,18 +50,18 @@ if run :
 	print("\n".join(map(str, [DirectChance,DetMult,DirectMult])) + "\n")
 	print("\n".join(map(str, [CritChance,CritDamage,CritMult,AttackPower])) + "\n")
 
-#Input Damage Calculations
+#Input damage calculations
 request = input("Test Ability Damage? y/n  ") 
 if request == "y" : 
     print("HeavyThrust: ", (int(((HeavyThrust) / 100) *  (DetMult) * (DirectMult) * (CritMult) * (p_weapon) * (AttackPower)))) 
 	
-#User Meld Input
+#User meld input
 det_request = int(input("Input Max Det: "))
 crit_request = int(input("Input Max Crit: "))
 direct_request = int(input("Input Max Direct: "))
 request6 = int(input("Input Max Possible Meld: "))
 	
-#Step Damage Increase
+#Step damage increase
 data_list = ['det3.csv','crit.csv','direct.csv']
 datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 request2 = input("Find Best Stats?")
@@ -107,7 +107,7 @@ while not stat_flags == [False, False, False]:
 		print(stats[beststat_ind] ) 
 		print('Multiplier: ' + str(bestmults[beststat_ind]))
 		print('Materia: ' + str(beststat_val))			
-	#Debug Prints
+	#Debug prints
 		#print(x)
 		#print(beststat_ind)
 		#print(beststat_remainder)
