@@ -1,11 +1,15 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
+from time import sleep
+
 
 
 #MainApp
 master = Tk()
 master.title("FFXIV Quick Math")
 master.geometry("400x400")
+	
 #Tab Stuff
 rows = 0
 while rows < 50:
@@ -32,17 +36,27 @@ e3 = Entry(page1)
 e1.grid(row=0, column=1)
 e2.grid(row=1, column=1)
 e3.grid(row=2, column=1)
+
+#Show Stats Function
 def showstats():
-	text = Text(page1)
-	text.insert(INSERT, "Hello.....")
-	#text1 = Text ( e1.get() )
-	#text2 = Text ( e2.get() )
-	#text3 = Text ( e3.get() )
-text = Text(page1)
-text.tag_add("here", "1.0", "1.4")
+	if not e1.get():
+		messagebox.showinfo("Information","Informative message")
+
+
 button = Button(page1, text="Print", command = showstats)
 button.place(x = 215,y = 15)
-button.invoke()
+
+#Setting Stat Info Block
+s1 = e1.get()
+#Show Stat Block
+lbl1 = Label(page1, text= s1)
+lbl1.grid(column=2, row=1)
+#Loop Till Updates
+for i in range(6):
+    sleep(1) # Need this to slow the changes down
+    s1 = e1.get()
+    master.update_idletasks()
+
 
 
 #Tab 2
