@@ -75,9 +75,9 @@ if request2 == "y" :
 
 
 def stat_extrapolate():
+	i = 0
 	while not stat_flags == [False, False, False]:
 		#Setting some variables
-			i = 0
 			x = floor(request6 / 40 ) * 40
 			det_array = [0,0]
 			crit_array = [0,0]
@@ -106,17 +106,19 @@ def stat_extrapolate():
 				x = x - min(crit_request, x)
 			if beststat_ind == 2:
 				x = x - min(direct_request, x)
+	#Separate each runs output into separate variables
 			if i == 0:
 				stat_extra1 = bestmults[beststat_ind]
 				stat_extra2 = beststat_val
+				stat_info1 = stats[beststat_ind]
 			if i == 1:
 				stat_extra3 = bestmults[beststat_ind]
 				stat_extra4 = beststat_val
+				stat_info2 = stats[beststat_ind] 
 			if i == 2:
 				stat_extra5 = bestmults[beststat_ind]
 				stat_extra6 = beststat_val
-				print(stat_extra6)
-				print(i)
+				stat_info3 = stats[beststat_ind] 
 			i = i + 1
 	#Print relevant info
 			#print('------------------------')

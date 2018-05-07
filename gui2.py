@@ -57,12 +57,12 @@ e3.grid(row=2, column=1)
 
 #Show Stats Function
 def showstats():
-	updated_label = time.strftime(e1.get())
-	lbl4.configure(text = updated_label)
-	updated_label2 = time.strftime(e2.get())
-	lbl5.configure(text = updated_label2)
-	updated_label3 = time.strftime(e3.get())
-	lbl6.configure(text = updated_label3)
+	p_det = time.strftime(e1.get())
+	lbl4.configure(text = p_det)
+	p_direct = time.strftime(e2.get())
+	lbl5.configure(text = p_direct)
+	p_crit = time.strftime(e3.get())
+	lbl6.configure(text = p_crit)
 
 button = Button(page1, text="Update", command = showstats)
 button.grid(column=3, row= 1, padx =10)
@@ -106,11 +106,14 @@ e6.grid(row=2, column=1)
 e7.grid(row=3, column=1)
 
 #Extrapolation Info Output
-statinfo1 = Label(page2, text ="Waiting", anchor="e", width=15)
+statinfo1 = Label(page2, text ="Waiting", anchor="w", width=15)
 statinfo1.grid(row=0, column=2)
-Label(page2, text ="Waiting", anchor="e", width=15).grid(row=0)
-Label(page2, text ="Waiting", anchor="e", width=15).grid(row=0)
-Label(page2, text ="Waiting", anchor="e", width=15).grid(row=0)
+statinfo2 = Label(page2, text ="Waiting", anchor="w", width=15)
+statinfo2.grid(row=1, column=2)
+statinfo3 = Label(page2, text ="Waiting", anchor="w", width=15)
+statinfo3.grid(row=2, column=2)
+statinfo4 = Label(page2, text ="Waiting", anchor="w", width=15)
+statinfo4.grid(row=3, column=2)
 
 def showstats1():
 	det_request = time.strftime(e4.get())
@@ -124,14 +127,24 @@ def showstats1():
 	
 button1 = Button(page2, text="Update", command = showstats1)
 button1.grid(column=1, row= 4, padx =10)
-button2 = Button(page2, text="Calculate", command = stat_extrapolate)
-button2.grid(column=3, row= 1, padx =10)
+
 #Stat Extrapolation
 def stat_extrapolate():
+	statinfo1.configure(text = 'Processing')
+	statinfo2.configure(text = 'Processing')
+	statinfo3.configure(text = 'Processing')
 	i = 0
+	p_det = int(time.strftime(e1.get()))
+	p_direct = int(time.strftime(e2.get()))
+	p_crit = int(time.strftime(e3.get()))
+	det_request = int(time.strftime(e4.get()))
+	direct_request = int(time.strftime(e5.get()))
+	crit_request = int(time.strftime(e6.get()))
+	request6 = int(time.strftime(e7.get()))
+
 	while not stat_flags == [False, False, False]:
 		#Setting some variables
-			x = floor(request6 / 40 ) * 40
+			x = floor(int(request6) / 40 ) * 40
 			det_array = [0,0]
 			crit_array = [0,0]
 			direct_array = [0,0]
@@ -164,7 +177,10 @@ def stat_extrapolate():
 				stat_extra1 = bestmults[beststat_ind]
 				stat_extra2 = beststat_val
 				stat_info1 = stats[beststat_ind]
-				statinfo1.configure(text = stat_extra1)
+				statinfo1.configure(text = stat_info1)
+				statinfo2.configure(text = stat_extra1)
+				statinfo3.configure(text = stat_extra2)
+				statinfo4.configure(text = i)
 			if i == 1:
 				stat_extra3 = bestmults[beststat_ind]
 				stat_extra4 = beststat_val
@@ -174,6 +190,9 @@ def stat_extrapolate():
 				stat_extra6 = beststat_val
 				stat_info3 = stats[beststat_ind] 
 			i = i + 1
+
+button2 = Button(page2, text="Calculate", command = stat_extrapolate)
+button2.grid(column=3, row= 1, padx =10)
 
 
 
