@@ -81,9 +81,6 @@ lbl5 = Label(page1, text = 'Waiting')
 lbl5.grid(column=5, row=1)
 lbl6 = Label(page1, text = 'Waiting')
 lbl6.grid(column=5, row=2)
-#Loop Till Updates
-
-
 
 
 #Tab 2

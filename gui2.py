@@ -136,6 +136,7 @@ statinfo8 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo8.grid(row=1, column=5)
 statinfo9 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo9.grid(row=2, column=5)
+
 def showstats1():
 	det_request = time.strftime(e4.get())
 	#lbl7.configure(text = updated_label4)
