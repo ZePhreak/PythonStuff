@@ -4,7 +4,20 @@ from tkinter import messagebox
 import tkinter.ttk as ttk
 import tkinter as tk
 import time
-#from variables import stat_extrapolate
+from math import * 
+import csv
+import numpy as np
+
+#Variables
+stats = [ "Determination", "Crit", "Direct Hit" ] 
+stat_flags = [True, True, True]
+det_data1 = 1
+crit_data1 = 1
+direct_data1 = 1
+
+#Load CSVS
+data_list = ['det3.csv','crit.csv','direct.csv']
+datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 
 
 
@@ -76,6 +89,67 @@ lbl6.grid(column=5, row=2)
 #Tab 2
 page2 = ttk.Frame(nb)
 nb.add(page2, text='Stat Extrapolation')
+#Input Variables
+Label(page2, text="Max Determination:", anchor="e", width=15).grid(row=0)
+Label(page2, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
+Label(page2, text="Max Critical Hit:", anchor="e", width=15).grid(row=2)
+Label(page2, text="Max Stat Meld:", anchor="e", width=15).grid(row=3)
+
+e4 = Entry(page2)
+e5 = Entry(page2)
+e6 = Entry(page2)
+e7 = Entry(page2)
+
+e4.grid(row=0, column=1)
+e5.grid(row=1, column=1)
+e6.grid(row=2, column=1)
+e7.grid(row=3, column=1)
+
+def showstats1():
+	det_request = time.strftime(e4.get())
+	lbl7.configure(text = updated_label4)
+	direct_request = time.strftime(e5.get())
+	lbl8.configure(text = updated_label5)
+	crit_request = time.strftime(e6.get())
+	lbl9.configure(text = updated_label6)
+	request6 = time.strftime(e7.get())
+	lbl10.configure(text = updated_label7)
+	
+button1 = Button(page2, text="Update", command = showstats1)
+button1.grid(column=1, row= 4, padx =10)
+
+#Stat Extrapolation
+def stat_extrapolation():
+	while not stat_flags == [False, False, False]:
+	#Setting some variables
+			x = floor(request6 / 40 ) * 40
+			det_array = [0,0]
+			crit_array = [0,0]
+			direct_array = [0,0]
+	#Search by player stats + max possible stat as long as it doesn't exceed max possible meld if state = true
+			if stat_flags[0]: 
+				det_data1 = np.searchsorted(np.squeeze(datafile[0][0]), (p_det + min(int(det_request), x)), side='left')
+				det_array = datafile[0][:, det_data1-1]
+			if stat_flags[1]:
+				crit_data1 = np.searchsorted(np.squeeze(datafile[1][0]), (p_crit + min(int(crit_request), x)), side='left')
+				crit_array = datafile[1][:, crit_data1-1]
+			if stat_flags[2]:
+				direct_data1 = np.searchsorted(np.squeeze(datafile[2][0]), (p_direct + min(int(direct_request), x)), side='left')
+				direct_array = datafile[2][:, direct_data1-1]
+	#Find the highest of the searches and mark it as found
+			mult_data = np.array( [det_array, crit_array, direct_array] ).T
+			bestmults = mult_data[1]
+			beststat_ind = np.argmax(bestmults)
+			beststat_val = mult_data[0][beststat_ind]
+			beststat_remainder = floor(beststat_ind / 40 ) * 40
+	#Update Variables
+			stat_flags[beststat_ind] = False
+			if beststat_ind == 0:
+				x = x - min(det_request, x)
+			if beststat_ind == 1:
+				x = x - min(crit_request, x)
+			if beststat_ind == 2:
+				x = x - min(direct_request, x)
 
 
 
