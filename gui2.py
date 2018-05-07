@@ -23,7 +23,7 @@ datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 #MainApp
 master = Tk()
 master.title("FFXIV Quick Math")
-master.geometry("550x300")
+master.geometry("600x300")
 	
 
 
@@ -74,22 +74,18 @@ lbl2 = Label(page1, text = 'Direct Hit:', anchor="e", width=12)
 lbl2.grid(column=4, row=1)
 lbl3 = Label(page1, text = 'Critical Hit:', anchor="e", width=12)
 lbl3.grid(column=4, row=2)
-lbl4 = Label(page1, text = 'Waiting')
+lbl4 = Label(page1, text = 'Waiting...')
 lbl4.grid(column=5, row=0)
-lbl5 = Label(page1, text = 'Waiting')
+lbl5 = Label(page1, text = 'Waiting...')
 lbl5.grid(column=5, row=1)
-lbl6 = Label(page1, text = 'Waiting')
+lbl6 = Label(page1, text = 'Waiting...')
 lbl6.grid(column=5, row=2)
-#Loop Till Updates
-
-
-
 
 #Tab 2
 page2 = ttk.Frame(nb)
 nb.add(page2, text='Stat Extrapolation')
 #Input Variables
-p = PanedWindow(page2, bg="grey", borderwidth=1)
+p = PanedWindow(page2, bg="grey", borderwidth=1, height=85, orient=VERTICAL)
 p.grid(row=0, column=0)
 Label(p, text="Max Determination:", anchor="e", width=15).grid(row=0)
 Label(p, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
@@ -108,37 +104,37 @@ e7.grid(row=3, column=1)
 
 #Extrapolation Info Output
 #Info
-p2 = PanedWindow(page2, bg="grey", borderwidth=1)
+p2 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
 p2.grid(row=0, column=2)
 Label(p2, text = "Stat: ", anchor="e", width=10).grid(row=0, column=2)
 Label(p2, text = "Multiplier: ", anchor="e", width=10).grid(row=1, column=2)
 Label(p2, text = "Materia: ", anchor="e", width=10).grid(row=2, column=2)
 #1st Stat
-p1 = PanedWindow(page2, bg="grey", borderwidth=1)
+p1 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
 p1.grid(row=0, column=3)
-statinfo1 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo1 = Label(p1, text ="Waiting...", anchor="w", width=12)
 statinfo1.grid(row=0, column=3)
-statinfo2 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo2 = Label(p1, text ="Waiting...", anchor="w", width=12)
 statinfo2.grid(row=1, column=3)
-statinfo3 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo3 = Label(p1, text ="Waiting...", anchor="w", width=12)
 statinfo3.grid(row=2, column=3)
 #2nd Stat
-p3 = PanedWindow(page2, bg="grey", borderwidth=1)
+p3 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
 p3.grid(row=0, column=4)
-statinfo4 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo4 = Label(p3, text ="Waiting...", anchor="w", width=12)
 statinfo4.grid(row=0, column=4)
-statinfo5 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo5 = Label(p3, text ="Waiting...", anchor="w", width=12)
 statinfo5.grid(row=1, column=4)
-statinfo6 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo6 = Label(p3, text ="Waiting...", anchor="w", width=12)
 statinfo6.grid(row=2, column=4)
 #3rd Stat
-p4 = PanedWindow(page2, bg="grey", borderwidth=1)
+p4 = PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
 p4.grid(row=0, column=5)
-statinfo7 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo7 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo7.grid(row=0, column=5)
-statinfo8 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo8 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo8.grid(row=1, column=5)
-statinfo9 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo9 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo9.grid(row=2, column=5)
 def showstats1():
 	det_request = time.strftime(e4.get())
@@ -151,15 +147,22 @@ def showstats1():
 	#lbl10.configure(text = updated_label7)
 	
 button1 = Button(page2, text="Update", command = showstats1)
-button1.grid(column=1, row= 4, padx =10)
+button1.place(x=100, y=90)
+#button1.grid(column=1, row= 4, padx =10)
 
 #Stat Extrapolation
 def stat_extrapolate():
 	#Variables
 	stat_flags = [True, True, True]
-	statinfo1.configure(text = 'Processing')
-	statinfo2.configure(text = 'Processing')
-	statinfo3.configure(text = 'Processing')
+	statinfo1.configure(text = 'Input Stats')
+	statinfo2.configure(text = 'Input Stats')
+	statinfo3.configure(text = 'Input Stats')
+	statinfo4.configure(text = 'Input Stats')
+	statinfo5.configure(text = 'Input Stats')
+	statinfo6.configure(text = 'Input Stats')
+	statinfo7.configure(text = 'Input Stats')
+	statinfo8.configure(text = 'Input Stats')
+	statinfo9.configure(text = 'Input Stats')
 	i = 0
 	p_det = int(time.strftime(e1.get()))
 	p_direct = int(time.strftime(e2.get()))
@@ -224,7 +227,8 @@ def stat_extrapolate():
 			i = i + 1
 
 button2 = Button(page2, text="Calculate", command = stat_extrapolate)
-button2.grid(column=4, row= 4, padx =10)
+button2.place(x=380, y=90)
+#button2.grid(column=4, row= 4, padx =10)
 
 
 
