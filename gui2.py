@@ -10,7 +10,6 @@ import numpy as np
 
 #Variables
 stats = [ "Determination", "Crit", "Direct Hit" ] 
-stat_flags = [True, True, True]
 det_data1 = 1
 crit_data1 = 1
 direct_data1 = 1
@@ -24,7 +23,7 @@ datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 #MainApp
 master = Tk()
 master.title("FFXIV Quick Math")
-master.geometry("500x300")
+master.geometry("550x300")
 	
 
 
@@ -65,7 +64,7 @@ def showstats():
 	lbl6.configure(text = p_crit)
 
 button = Button(page1, text="Update", command = showstats)
-button.grid(column=3, row= 1, padx =10)
+button.grid(column=3, row= 1, padx =15)
 
 #Setting Stat Info Block
 #Show Stat Block
@@ -90,15 +89,17 @@ lbl6.grid(column=5, row=2)
 page2 = ttk.Frame(nb)
 nb.add(page2, text='Stat Extrapolation')
 #Input Variables
-Label(page2, text="Max Determination:", anchor="e", width=15).grid(row=0)
-Label(page2, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
-Label(page2, text="Max Critical Hit:", anchor="e", width=15).grid(row=2)
-Label(page2, text="Max Stat Meld:", anchor="e", width=15).grid(row=3)
+p = PanedWindow(page2, bg="grey", borderwidth=1)
+p.grid(row=0, column=0)
+Label(p, text="Max Determination:", anchor="e", width=15).grid(row=0)
+Label(p, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
+Label(p, text="Max Critical Hit:", anchor="e", width=15).grid(row=2)
+Label(p, text="Max Stat Meld:", anchor="e", width=15).grid(row=3)
 
-e4 = Entry(page2)
-e5 = Entry(page2)
-e6 = Entry(page2)
-e7 = Entry(page2)
+e4 = Entry(p)
+e5 = Entry(p)
+e6 = Entry(p)
+e7 = Entry(p)
 
 e4.grid(row=0, column=1)
 e5.grid(row=1, column=1)
@@ -106,30 +107,56 @@ e6.grid(row=2, column=1)
 e7.grid(row=3, column=1)
 
 #Extrapolation Info Output
-statinfo1 = Label(page2, text ="Waiting", anchor="w", width=15)
-statinfo1.grid(row=0, column=2)
-statinfo2 = Label(page2, text ="Waiting", anchor="w", width=15)
-statinfo2.grid(row=1, column=2)
-statinfo3 = Label(page2, text ="Waiting", anchor="w", width=15)
-statinfo3.grid(row=2, column=2)
-statinfo4 = Label(page2, text ="Waiting", anchor="w", width=15)
-statinfo4.grid(row=3, column=2)
-
+#Info
+p2 = PanedWindow(page2, bg="grey", borderwidth=1)
+p2.grid(row=0, column=2)
+Label(p2, text = "Stat: ", anchor="e", width=10).grid(row=0, column=2)
+Label(p2, text = "Multiplier: ", anchor="e", width=10).grid(row=1, column=2)
+Label(p2, text = "Materia: ", anchor="e", width=10).grid(row=2, column=2)
+#1st Stat
+p1 = PanedWindow(page2, bg="grey", borderwidth=1)
+p1.grid(row=0, column=3)
+statinfo1 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo1.grid(row=0, column=3)
+statinfo2 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo2.grid(row=1, column=3)
+statinfo3 = Label(p1, text ="Waiting", anchor="w", width=12)
+statinfo3.grid(row=2, column=3)
+#2nd Stat
+p3 = PanedWindow(page2, bg="grey", borderwidth=1)
+p3.grid(row=0, column=4)
+statinfo4 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo4.grid(row=0, column=4)
+statinfo5 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo5.grid(row=1, column=4)
+statinfo6 = Label(p3, text ="Waiting", anchor="w", width=12)
+statinfo6.grid(row=2, column=4)
+#3rd Stat
+p4 = PanedWindow(page2, bg="grey", borderwidth=1)
+p4.grid(row=0, column=5)
+statinfo7 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo7.grid(row=0, column=5)
+statinfo8 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo8.grid(row=1, column=5)
+statinfo9 = Label(p4, text ="Waiting", anchor="w", width=12)
+statinfo9.grid(row=2, column=5)
 def showstats1():
 	det_request = time.strftime(e4.get())
-	lbl7.configure(text = updated_label4)
+	#lbl7.configure(text = updated_label4)
 	direct_request = time.strftime(e5.get())
-	lbl8.configure(text = updated_label5)
+	#lbl8.configure(text = updated_label5)
 	crit_request = time.strftime(e6.get())
-	lbl9.configure(text = updated_label6)
+	#lbl9.configure(text = updated_label6)
 	request6 = time.strftime(e7.get())
-	lbl10.configure(text = updated_label7)
+	#lbl10.configure(text = updated_label7)
 	
 button1 = Button(page2, text="Update", command = showstats1)
 button1.grid(column=1, row= 4, padx =10)
 
 #Stat Extrapolation
 def stat_extrapolate():
+	#Variables
+	stat_flags = [True, True, True]
 	statinfo1.configure(text = 'Processing')
 	statinfo2.configure(text = 'Processing')
 	statinfo3.configure(text = 'Processing')
@@ -180,19 +207,24 @@ def stat_extrapolate():
 				statinfo1.configure(text = stat_info1)
 				statinfo2.configure(text = stat_extra1)
 				statinfo3.configure(text = stat_extra2)
-				statinfo4.configure(text = i)
 			if i == 1:
 				stat_extra3 = bestmults[beststat_ind]
 				stat_extra4 = beststat_val
-				stat_info2 = stats[beststat_ind] 
+				stat_info2 = stats[beststat_ind]
+				statinfo4.configure(text = stat_info2)
+				statinfo5.configure(text = stat_extra3)
+				statinfo6.configure(text = stat_extra4)
 			if i == 2:
 				stat_extra5 = bestmults[beststat_ind]
 				stat_extra6 = beststat_val
-				stat_info3 = stats[beststat_ind] 
+				stat_info3 = stats[beststat_ind]
+				statinfo7.configure(text = stat_info3)
+				statinfo8.configure(text = stat_extra5)
+				statinfo9.configure(text = stat_extra6)
 			i = i + 1
 
 button2 = Button(page2, text="Calculate", command = stat_extrapolate)
-button2.grid(column=3, row= 1, padx =10)
+button2.grid(column=4, row= 4, padx =10)
 
 
 
