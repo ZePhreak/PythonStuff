@@ -104,10 +104,10 @@ def stat_extrapolate():
 			if beststat_ind == 2:
 				x = x - min(direct_request, x)
 	#Print relevant info
-			print('------------------------')
-			print(stats[beststat_ind] ) 
-			print('Multiplier: ' + str(bestmults[beststat_ind]))
-			print('Materia: ' + str(beststat_val))			
+			#print('------------------------')
+			#print(stats[beststat_ind] ) 
+			#print('Multiplier: ' + str(bestmults[beststat_ind]))
+			#print('Materia: ' + str(beststat_val))			
 	#Debug prints
 			#print(x)
 			#print(beststat_ind)
