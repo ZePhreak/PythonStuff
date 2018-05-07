@@ -41,21 +41,20 @@ e3.grid(row=2, column=1)
 def showstats():
 	if not e1.get():
 		messagebox.showinfo("Information","Informative message")
+	global s1
+	s1.set(e1.get())
+	master.update()
 
-
-button = Button(page1, text="Print", command = showstats)
+button = Button(page1, text="Update", command = showstats)
 button.place(x = 215,y = 15)
 
 #Setting Stat Info Block
-s1 = e1.get()
+s1 = ('waiting')
 #Show Stat Block
-lbl1 = Label(page1, text= s1)
+lbl1 = Label(page1, textvariable= s1)
 lbl1.grid(column=2, row=1)
 #Loop Till Updates
-for i in range(6):
-    sleep(1) # Need this to slow the changes down
-    s1 = e1.get()
-    master.update_idletasks()
+
 
 
 
@@ -65,4 +64,5 @@ nb.add(page2, text='Stat Extrapolation')
 
 
 #End
+master.update()
 mainloop()
