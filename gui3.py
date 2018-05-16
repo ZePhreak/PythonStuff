@@ -21,15 +21,17 @@ from matplotlib.figure import Figure
 import re
 from decimal import *
 mpl.use('TkAgg')
+#Import my functions
+import func
+
+#Globals
+global p_det, p_direct, p_crit
 
 #Variables
 stats = [ "Determination", "Crit", "Direct Hit" ]
 det_data1 = 1
 crit_data1 = 1
 direct_data1 = 1
-p_det = 0
-p_direct = 0
-p_crit = 0
 det_request = 0
 direct_request = 0
 crit_request = 0
@@ -199,57 +201,59 @@ plt.ion()
 
 #Graph Plotting
 #Checking State
+global showDet, showCrit, showDirect, showTen, showS
 showDet = IntVar(value=1)
 showCrit = IntVar(value=1)
 showDirect = IntVar(value=1)
 showTen = IntVar(value=1)
 showS = IntVar(value=1)
 
+
 #State of Checkboxes (CLEAN UP)################################################################
 def stat_state():
-	if showDet:
-		if det_plot.get_visible():
-			det_plot.set_visible(False)
-		else:
-			det_plot.set_visible(True)
-		a.legend()
-		canvas.draw()
+	det_plot.set_visible(not det_plot.get_visible())
+	try:
+		det_plot1.set_visible(not det_plot1.get_visible())
+	except:
+		pass
+	a.legend()
+	canvas.draw()
 
 def stat_state1():
-	if showCrit:
-		if crit_plot.get_visible():
-			crit_plot.set_visible(False)
-		else:
-			crit_plot.set_visible(True)
-		a.legend()
-		canvas.draw()
+	crit_plot.set_visible(not crit_plot.get_visible())
+	try:
+		crit_plot1.set_visible(not crit_plot1.get_visible())
+	except:
+		pass
+	a.legend()
+	canvas.draw()
 
 def stat_state2():
-	if showDirect:
-		if direct_plot.get_visible():
-			direct_plot.set_visible(False)
-		else:
-			direct_plot.set_visible(True)
-		a.legend()
-		canvas.draw()
+	direct_plot.set_visible(not direct_plot.get_visible())
+	try:
+		direct_plot1.set_visible(not direct_plot1.get_visible())
+	except:
+		pass
+	a.legend()
+	canvas.draw()
 
 def stat_state3():
-	if showTen:
-		if ten_plot.get_visible():
-			ten_plot.set_visible(False)
-		else:
-			ten_plot.set_visible(True)
-		a.legend()
-		canvas.draw()
+	ten_plot.set_visible(not ten_plot.get_visible())
+	try:
+		ten_plot1.set_visible(not ten_plot1.get_visible())
+	except:
+		pass
+	a.legend()
+	canvas.draw()
 
 def stat_state4():
-	if showS:
-		if s_plot.get_visible():
-			s_plot.set_visible(False)
-		else:
-			s_plot.set_visible(True)
-		a.legend()
-		canvas.draw()
+	s_plot.set_visible(not s_plot.get_visible())
+	try:
+		s_plot1.set_visible(not s_plot1.get_visible())
+	except:
+		pass
+	a.legend()
+	canvas.draw()
 
 ###########################################################################################
 #Setting up Graph
@@ -264,6 +268,7 @@ toolbar_frame.place(x=400,y=600)
 toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
 toolbar.update()
 toolbar.grid(row=9, column=9)
+a.grid()
 a.legend()
 a.set_title('Stats')
 a.set_xlabel('Materia')
@@ -366,39 +371,51 @@ def stat_extrapolate():
 				statinfo7.configure(text = stat_info3)
 				statinfo8.configure(text = stat_extra5)
 				statinfo9.configure(text = stat_extra6)
-				d1 = (stat_extra2, stat_extra1)
-				d2 = (stat_extra4, stat_extra3)
-				d3 = (stat_extra6, stat_extra5)
-				a.legend([])
-				##########Lazy Colour Set#######
-				if stat_info1 == 'Crit':
-					c1 = 'orange'
-				if stat_info1 == 'Determination':
-					c1 = 'blue'
-				if stat_info1 == 'Direct Hit':
-					c1 = 'green'
-				if stat_info2 == 'Crit':
-					c2 = 'orange'
-				if stat_info2 == 'Determination':
-					c2 = 'blue'
-				if stat_info2 == 'Direct Hit':
-					c2 = 'green'
-				if stat_info3 == 'Crit':
-					c3 = 'orange'
-				if stat_info3 == 'Determination':
-					c3 = 'blue'
-				if stat_info3 == 'Direct Hit':
-					c3 = 'green'
-				##########Lazy Colour Set End#######
-				ps1 = a.scatter(d1[0],d1[1],40,c1, label=stat_info1)
-				ps2 = a.scatter(d2[0],d2[1],40,c2, label=stat_info2)
-				ps3 = a.scatter(d3[0],d3[1],40,c3, label=stat_info3)
-				a.legend()
-				canvas.draw()
-				ps1.remove()
-				ps2.remove()
-				ps3.remove()
+				scatter()
 			i = i + 1
+
+def scatter():
+					d1 = (stat_extra2, stat_extra1)
+					d2 = (stat_extra4, stat_extra3)
+					d3 = (stat_extra6, stat_extra5)
+					a.legend([])
+					##########Lazy Colour Set#######
+					if stat_info1 == 'Crit':
+						c1 = 'orange'
+					if stat_info1 == 'Determination':
+						c1 = 'blue'
+					if stat_info1 == 'Direct Hit':
+						c1 = 'green'
+					if stat_info2 == 'Crit':
+						c2 = 'orange'
+					if stat_info2 == 'Determination':
+						c2 = 'blue'
+					if stat_info2 == 'Direct Hit':
+						c2 = 'green'
+					if stat_info3 == 'Crit':
+						c3 = 'orange'
+					if stat_info3 == 'Determination':
+						c3 = 'blue'
+					if stat_info3 == 'Direct Hit':
+						c3 = 'green'
+					##########Lazy Colour Set End#######
+					a.clear()
+					global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
+					showDet.get()
+					det_plot1, = a.plot(x, x1, label='Determination', visible=showDet)
+					crit_plot1, = a.plot(y, y1, label='Crit')
+					direct_plot1, = a.plot(z, z1, label='Direct')
+					ten_plot1, = a.plot(t, t1, label='Tenacity')
+					s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
+					ps1 = a.scatter(d1[0],d1[1],40,c1, label=stat_info1)
+					ps2 = a.scatter(d2[0],d2[1],40,c2, label=stat_info2)
+					ps3 = a.scatter(d3[0],d3[1],40,c3, label=stat_info3)
+					a.set_title('Stats')
+					a.set_xlabel('Materia')
+					a.set_ylabel('Modifier')
+					a.grid()
+					a.legend()
+					canvas.draw()
 
 
 
@@ -408,55 +425,14 @@ button2 = Button(page2, text="Calculate", command = stat_extrapolate)
 button2.grid(column=4, row= 4)
 
 
-#Pickles! Saving inputs
-def savestats():
-	p_det = time.strftime(e1.get())
-	p_direct = time.strftime(e2.get())
-	p_crit = time.strftime(e3.get())
-	det_request = time.strftime(e4.get())
-	direct_request = time.strftime(e5.get())
-	crit_request = time.strftime(e6.get())
-	request6 = time.strftime(e7.get())
-	#Dump each variable
-	s = filedialog.asksaveasfilename(defaultextension=".p",initialdir = "%userprofile%\Documents",title = "Select file",filetypes = (("Build File",".p"),("all files","*.*")))
-	f = open(s, 'wb')
-	pickle.dump(p_det, f)
-	pickle.dump(p_direct, f)
-	pickle.dump(p_crit, f)
-	pickle.dump(det_request, f)
-	pickle.dump(direct_request, f)
-	pickle.dump(crit_request, f)
-	pickle.dump(request6, f)
-button3 = Button(page1, text="Save", command = savestats)
+#Load and Save Buttons
+p_det = IntVar(value=0)
+p_direct = IntVar(value=0)
+p_crit = IntVar(value=0)
+button3 = Button(page1, text="Save", command = func.savestats)
 button3.place(x=150, y=68)
 
-#Load Pickle
-def loadstats():
-	s1 = askopenfilename(initialdir = "%userprofile%\Documents",title = "Select file",filetypes = (("Build File","*.p"),("all files","*.*")))
-	f1 = open(s1, 'rb')
-	global p_det
-	global p_direct
-	global p_crit
-	global det_request
-	global direct_request
-	global crit_request
-	global request6
-	p_det = int(pickle.load(f1))
-	p_direct = int(pickle.load(f1))
-	p_crit = int(pickle.load(f1))
-	det_request = int(pickle.load(f1))
-	direct_request = int(pickle.load(f1))
-	crit_request = int(pickle.load(f1))
-	request6 = int(pickle.load(f1))
-	#Set Labels
-	lbl4.configure(text = p_det)
-	lbl5.configure(text = p_direct)
-	lbl6.configure(text = p_crit)
-	#Show load
-	#messagebox.showinfo("Title", [p_det, p_direct, p_crit, det_request, direct_request, crit_request, request6] )
-
-#load pickle button
-button4 = Button(page1, text="Load", command = loadstats)
+button4 = Button(page1, text="Load", command = func.loadstats)
 button4.place(x=125, y=98)
 
 ######################################## Tab 3 - Gear Comparison ########################################
@@ -515,12 +491,12 @@ DHA = 550
 DetA = 130
 SSA = 130
 TNCA = 100
-DetMult = (1000 + floor((SSA * (p_det - basemain)) / jobmod )) / 1000
-DirectChance = floor( p_direct - basesub) / 39.09 * 0.01
-DirectMult = (DirectChance * 1.25 + (1 - DirectChance))
-CritChance = floor((0.05 + (p_crit - basesub) /108.5 * 0.01) *1000) / 1000
-CritDamage = floor(p_crit - basesub)/108.5 * 0.01 +1.4
-CritMult = (CritDamage * CritChance) + (1 - CritChance)
+#DetMult = (1000 + floor((SSA * (p_det - basemain)) / jobmod )) / 1000
+#DirectChance = floor( p_direct - basesub) / 39.09 * 0.01
+#DirectMult = (DirectChance * 1.25 + (1 - DirectChance))
+#CritChance = floor((0.05 + (p_crit - basesub) /108.5 * 0.01) *1000) / 1000
+#CritDamage = floor(p_crit - basesub)/108.5 * 0.01 +1.4
+#CritMult = (CritDamage * CritChance) + (1 - CritChance)
 #AttackPower = (1 + floor(SSA * (p_attackpower - basemain) / basemain) /100)
 
 
@@ -552,7 +528,6 @@ def compare_ap():
 	CritMult2 = (CritDamage2 * CritChance2) + (1 - CritChance2)
 	#Label Stuff
 	AP_Inc = int((AttackPower2 - AttackPower1) *1000)/1000
-	print(DetMult2, DetMult1)
 	DET_Inc = int((DetMult2 - DetMult1) *1000)/1000
 	DH_Inc = int((DirectMult2 - DirectMult1) *1000)/1000
 	C_Inc = int((CritMult2 - CritMult1) *1000)/1000
@@ -599,9 +574,6 @@ def Class(var):
 	for a in Abilities:
 		w1["menu"].add_command(label = a, command = Ability())
 		tk._setit(var1, a)
-		#var1.set(Abilities[0])
-		#Ability()
-		#print(var1)
 
 
 #Find Ability CSV
@@ -611,10 +583,8 @@ def Ability():
 	ability_data = np.genfromtxt('abilities.csv', delimiter=',', dtype=None)
 	#tk._setit(ability1, var1.get())
 	ability1 = var1.get()
-	print(ability1)
 	ability1_search = np.where(ability_data[0] == ability1, ability_data[2], ability_data[1])
 	ability2 = ability1_search[1]
-	print(ability2)
 
 Label(page4, text=ability2, anchor="e", width=12).grid(row=1, column=1)
 
