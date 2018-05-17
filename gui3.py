@@ -321,48 +321,48 @@ Checkbutton(page2, text="S Speed", variable=showS, command=stat_state4).place(x=
 
 
 
-def scatter():
-					d1 = (stat_extra2, stat_extra1)
-					d2 = (stat_extra4, stat_extra3)
-					d3 = (stat_extra6, stat_extra5)
-					a.legend([])
-					##########Lazy Colour Set#######
-					if stat_info1 == 'Crit':
-						c1 = 'orange'
-					if stat_info1 == 'Determination':
-						c1 = 'blue'
-					if stat_info1 == 'Direct Hit':
-						c1 = 'green'
-					if stat_info2 == 'Crit':
-						c2 = 'orange'
-					if stat_info2 == 'Determination':
-						c2 = 'blue'
-					if stat_info2 == 'Direct Hit':
-						c2 = 'green'
-					if stat_info3 == 'Crit':
-						c3 = 'orange'
-					if stat_info3 == 'Determination':
-						c3 = 'blue'
-					if stat_info3 == 'Direct Hit':
-						c3 = 'green'
-					##########Lazy Colour Set End#######
-					a.clear()
-					global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
-					showDet.get()
-					det_plot1, = a.plot(x, x1, label='Determination', visible=showDet)
-					crit_plot1, = a.plot(y, y1, label='Crit')
-					direct_plot1, = a.plot(z, z1, label='Direct')
-					ten_plot1, = a.plot(t, t1, label='Tenacity')
-					s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
-					ps1 = a.scatter(d1[0],d1[1],40,c1, label=stat_info1)
-					ps2 = a.scatter(d2[0],d2[1],40,c2, label=stat_info2)
-					ps3 = a.scatter(d3[0],d3[1],40,c3, label=stat_info3)
-					a.set_title('Stats')
-					a.set_xlabel('Materia')
-					a.set_ylabel('Modifier')
-					a.grid()
-					a.legend()
-					canvas.draw()
+#def scatter():
+#					d1 = (var.stat_extra2, var.stat_extra1)
+#					d2 = (var.stat_extra4, var.stat_extra3)
+#					d3 = (var.stat_extra6, var.stat_extra5)
+#					var.legend([])
+#					##########Lazy Colour Set#######
+#					if stat_info1 == 'Crit':
+#						c1 = 'orange'
+#					if stat_info1 == 'Determination':
+#						c1 = 'blue'
+#					if stat_info1 == 'Direct Hit':
+#						c1 = 'green'
+#					if stat_info2 == 'Crit':
+#						c2 = 'orange'
+#					if stat_info2 == 'Determination':
+#						c2 = 'blue'
+#					if stat_info2 == 'Direct Hit':
+#						c2 = 'green'
+#					if stat_info3 == 'Crit':
+#						c3 = 'orange'
+#					if stat_info3 == 'Determination':
+#						c3 = 'blue'
+#					if stat_info3 == 'Direct Hit':
+#						c3 = 'green'
+#					##########Lazy Colour Set End#######
+#					a.clear()
+#					global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
+#					showDet.get()
+#					det_plot1, = a.plot(x, x1, label='Determination')
+#					crit_plot1, = a.plot(y, y1, label='Crit')
+#					direct_plot1, = a.plot(z, z1, label='Direct')
+#					ten_plot1, = a.plot(t, t1, label='Tenacity')
+#					s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
+#					ps1 = a.scatter(d1[0],d1[1],40,c1, label=stat_info1)
+#					ps2 = a.scatter(d2[0],d2[1],40,c2, label=stat_info2)
+#					ps3 = a.scatter(d3[0],d3[1],40,c3, label=stat_info3)
+#					a.set_title('Stats')
+#					a.set_xlabel('Materia')
+#					a.set_ylabel('Modifier')
+#					a.grid()
+#					a.legend()
+#					canvas.draw()
 
 
 
@@ -435,14 +435,6 @@ DHA = 550
 DetA = 130
 SSA = 130
 TNCA = 100
-#DetMult = (1000 + floor((SSA * (p_det - basemain)) / jobmod )) / 1000
-#DirectChance = floor( p_direct - basesub) / 39.09 * 0.01
-#DirectMult = (DirectChance * 1.25 + (1 - DirectChance))
-#CritChance = floor((0.05 + (p_crit - basesub) /108.5 * 0.01) *1000) / 1000
-#CritDamage = floor(p_crit - basesub)/108.5 * 0.01 +1.4
-#CritMult = (CritDamage * CritChance) + (1 - CritChance)
-#AttackPower = (1 + floor(SSA * (p_attackpower - basemain) / basemain) /100)
-
 
 #Compare Function
 def compare_ap():
