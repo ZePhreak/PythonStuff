@@ -1,18 +1,20 @@
 from tkinter import filedialog
 from tkinter.filedialog import askopenfilename
+import tkinter as tk
 import time
 import pickle
+import var
 
 
 #Pickles! Saving inputs
 def savestats():
-	p_det = time.strftime(gui3.e1.get())
-	p_direct = time.strftime(gui3.e2.get())
-	p_crit = time.strftime(gui3.e3.get())
-	det_request = time.strftime(gui3.e4.get())
-	direct_request = time.strftime(gui3.e5.get())
-	crit_request = time.strftime(gui3.e6.get())
-	request6 = time.strftime(gui3.e7.get())
+	p_det = var.p_det
+	p_direct = var.p_direct
+	p_crit = var.p_crit
+	det_request = var.det_request
+	direct_request = var.direct_request
+	crit_request = var.crit_request
+	request6 = var.request6
 	#Dump each variable
 	s = filedialog.asksaveasfilename(defaultextension=".p",initialdir = "%userprofile%\Documents",title = "Select file",filetypes = (("Build File",".p"),("all files","*.*")))
 	f = open(s, 'wb')
@@ -26,17 +28,23 @@ def savestats():
 
 #Load Pickle
 def loadstats():
-	s1 = askopenfilename(initialdir = "%userprofile%\Documents",title = "Select file",filetypes = (("Build File","*.p"),("all files","*.*")))
-	f1 = open(s1, 'rb')
-	p_det_l = int(pickle.load(f1))
-	p_direct_l = int(pickle.load(f1))
-	p_crit_l = int(pickle.load(f1))
-	det_request_l = int(pickle.load(f1))
-	direct_request_l = int(pickle.load(f1))
-	crit_request_l = int(pickle.load(f1))
-	request6_l = int(pickle.load(f1))
-	#Set Labels
-	global p_det, p_direct, p_crit
-	gui3.p_det.set(p_det_l)
-	gui3.p_direct.set(p_direct_l)
-	gui3.p_crit.set(p_crit_l)
+	try:
+		s1 = askopenfilename(initialdir = "%userprofile%\Documents",title = "Select file",filetypes = (("Build File","*.p"),("all files","*.*")))
+		f1 = open(s1, 'rb')
+		p_det = int(pickle.load(f1))
+		p_direct = int(pickle.load(f1))
+		p_crit = int(pickle.load(f1))
+		det_request = int(pickle.load(f1))
+		direct_request = int(pickle.load(f1))
+		crit_request = int(pickle.load(f1))
+		request6 = int(pickle.load(f1))
+		#Set Labels
+		var.p_det = p_det
+		var.p_direct = p_direct
+		var.p_crit = p_crit
+		var.det_request = det_request
+		var.direct_request = direct_request
+		var.crit_request = crit_request
+		var.request6 = request6
+	except:
+		pass

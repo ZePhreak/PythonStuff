@@ -1,3 +1,6 @@
+#MainImports
+
+#
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
@@ -22,10 +25,11 @@ import re
 from decimal import *
 mpl.use('TkAgg')
 #Import my functions
-import func
+import func as func
+import var as var
 
 #Globals
-global p_det, p_direct, p_crit
+
 
 #Variables
 stats = [ "Determination", "Crit", "Direct Hit" ]
@@ -69,6 +73,18 @@ while rows < 50:
 nb = ttk.Notebook(master)
 nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
 
+
+#Update Function
+def callback(number):
+		import var
+		if 1:
+			func.loadstats()
+			lbl4.configure(text = var.p_det)
+			lbl5.configure(text = var.p_direct)
+			lbl6.configure(text = var.p_crit)
+
+
+
 ######################################## Character Stats ########################################
 page1 = ttk.Frame(nb)
 nb.add(page1, text='Character Stats')
@@ -78,19 +94,23 @@ Label(page1, text="Determination:", anchor="e", width=12).grid(row=0)
 Label(page1, text="Direct Hit:", anchor="e", width=12).grid(row=1)
 Label(page1, text="Critical Hit:", anchor="e", width=12).grid(row=2)
 
-e1 = Entry(page1).grid(row=0, column=1)
-e2 = Entry(page1).grid(row=1, column=1)
-e3 = Entry(page1).grid(row=2, column=1)
+e1 = Entry(page1)
+e1.grid(row=0, column=1)
+e2 = Entry(page1)
+e2.grid(row=1, column=1)
+e3 = Entry(page1)
+e3.grid(row=2, column=1)
 
 
 #Show Stats Function
 def showstats():
-	p_det = time.strftime(e1.get())
-	lbl4.configure(text = p_det)
-	p_direct = time.strftime(e2.get())
-	lbl5.configure(text = p_direct)
-	p_crit = time.strftime(e3.get())
-	lbl6.configure(text = p_crit)
+	import var
+	var.p_det = e1.get()
+	lbl4.configure(text = var.p_det)
+	var.p_direct = e2.get()
+	lbl5.configure(text = var.p_direct)
+	var.p_crit = e3.get()
+	lbl6.configure(text = var.p_crit)
 
 button = Button(page1, text="Update", command = showstats)
 button.place(x=100, y=68)
@@ -168,14 +188,11 @@ statinfo9 = Label(p4, text ="Waiting...", anchor="w", width=12)
 statinfo9.grid(row=2, column=5)
 
 def showstats1():
-	det_request = time.strftime(e4.get())
-	#lbl7.configure(text = updated_label4)
-	direct_request = time.strftime(e5.get())
-	#lbl8.configure(text = updated_label5)
-	crit_request = time.strftime(e6.get())
-	#lbl9.configure(text = updated_label6)
-	request6 = time.strftime(e7.get())
-	#lbl10.configure(text = updated_label7)
+	import var
+	var.det_request = e4.get()
+	var.direct_request = e5.get()
+	var.crit_request = e6.get()
+	var.request6 = e7.get()
 
 button1 = Button(page2, text="Update", command = showstats1)
 button1.place(x=100, y=90)
@@ -289,7 +306,9 @@ Checkbutton(page2, text="Tenacity", variable=showTen, command=stat_state3).place
 Checkbutton(page2, text="S Speed", variable=showS, command=stat_state4).place(x=780, y=280)
 
 #Stat Extrapolation
+
 def stat_extrapolate():
+	import var
 	#Variables
 	stat_flags = [True, True, True]
 	statinfo1.configure(text = 'Input Stats')
@@ -309,22 +328,23 @@ def stat_extrapolate():
 	#direct_request = int(time.strftime(e5.get()))
 	#crit_request = int(time.strftime(e6.get()))
 	#request6 = int(time.strftime(e7.get()))
-
+	x = floor(float(var.request6) / 40 ) * 40
 	while not stat_flags == [False, False, False]:
+			print(var.det_request)
+			print(var.request6)
 		#Setting some variables
-			x = floor(int(request6) / 40 ) * 40
 			det_array = [0,0]
 			crit_array = [0,0]
 			direct_array = [0,0]
 	#Search by player stats + max possible stat as long as it doesn't exceed max possible meld if state = true
 			if stat_flags[0]:
-				det_data1 = np.searchsorted(np.squeeze(datafile[0][0]), (p_det + min(int(det_request), x)), side='left')
+				det_data1 = np.searchsorted(np.squeeze(datafile[0][0]), (float(var.p_det) + min(int(var.det_request), x)), side='left')
 				det_array = datafile[0][:, det_data1-1]
 			if stat_flags[1]:
-				crit_data1 = np.searchsorted(np.squeeze(datafile[1][0]), (p_crit + min(int(crit_request), x)), side='left')
+				crit_data1 = np.searchsorted(np.squeeze(datafile[1][0]), (float(var.p_crit) + min(int(var.crit_request), x)), side='left')
 				crit_array = datafile[1][:, crit_data1-1]
 			if stat_flags[2]:
-				direct_data1 = np.searchsorted(np.squeeze(datafile[2][0]), (p_direct + min(int(direct_request), x)), side='left')
+				direct_data1 = np.searchsorted(np.squeeze(datafile[2][0]), (float(var.p_direct) + min(int(var.direct_request), x)), side='left')
 				direct_array = datafile[2][:, direct_data1-1]
 	#Find the highest of the searches and mark it as found
 			mult_data = np.array( [det_array, crit_array, direct_array] ).T
@@ -335,11 +355,14 @@ def stat_extrapolate():
 	#Update Variables
 			stat_flags[beststat_ind] = False
 			if beststat_ind == 0:
-				x = x - min(det_request, x)
+				x = x - min(float(var.det_request), x)
+				print(x)
 			if beststat_ind == 1:
-				x = x - min(crit_request, x)
+				x = x - min(float(var.crit_request), x)
+				print(x)
 			if beststat_ind == 2:
-				x = x - min(direct_request, x)
+				x = x - min(float(var.direct_request), x)
+				print(x)
 	#Separate each runs output into separate variables
 			if i == 0:
 				global stat_extra1
@@ -426,13 +449,10 @@ button2.grid(column=4, row= 4)
 
 
 #Load and Save Buttons
-p_det = IntVar(value=0)
-p_direct = IntVar(value=0)
-p_crit = IntVar(value=0)
 button3 = Button(page1, text="Save", command = func.savestats)
 button3.place(x=150, y=68)
 
-button4 = Button(page1, text="Load", command = func.loadstats)
+button4 = Button(page1, text="Load", command =lambda: callback(1))
 button4.place(x=125, y=98)
 
 ######################################## Tab 3 - Gear Comparison ########################################

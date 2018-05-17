@@ -1,0 +1,16 @@
+p_det = 0
+p_direct = 0
+p_crit = 0
+det_request = 0
+direct_request = 0
+crit_request = 0
+request6 = 0
+stat_info1 = 0
+stat_info2 = 0
+stat_info3 = 0
+stat_extra1 = 0
+stat_extra2 = 0
+stat_extra3 = 0
+stat_extra4 = 0
+stat_extra5 = 0
+stat_extra6 = 0
