@@ -71,31 +71,32 @@ nb.grid(row=1, column=0, columnspan=50, rowspan=49, sticky='NESW')
 
 
 #Update Function
-def callback(number):
-	import var
-	if number == 1:
-		print('Load Stats Called')
-		func.loadstats()
-		lbl4.configure(text = var.p_det)
-		lbl5.configure(text = var.p_direct)
-		lbl6.configure(text = var.p_crit)
-	if number == 2:
-		try:
-			print('Stat Extrapolate Called')
-			statext.stat_extrapolate()
-			statinfo1.configure(text = var.stat_info1)
-			statinfo2.configure(text = var.stat_extra1)
-			statinfo3.configure(text = var.stat_extra2)
-			statinfo4.configure(text = var.stat_info2)
-			statinfo5.configure(text = var.stat_extra3)
-			statinfo6.configure(text = var.stat_extra4)
-			statinfo7.configure(text = var.stat_info3)
-			statinfo8.configure(text = var.stat_extra5)
-			statinfo9.configure(text = var.stat_extra6)
-		except:
-			pass
-	if number == 3:
-		pass
+class Callback():
+	def callback(number):
+		import var
+		if number == 1:
+			print('Load Stats Called')
+			func.loadstats()
+			lbl4.configure(text = var.p_det)
+			lbl5.configure(text = var.p_direct)
+			lbl6.configure(text = var.p_crit)
+		if number == 2:
+			try:
+				print('Stat Extrapolate Called')
+				statext.stat_extrapolate()
+				statinfo1.configure(text = var.stat_info1)
+				statinfo2.configure(text = var.stat_extra1)
+				statinfo3.configure(text = var.stat_extra2)
+				statinfo4.configure(text = var.stat_info2)
+				statinfo5.configure(text = var.stat_extra3)
+				statinfo6.configure(text = var.stat_extra4)
+				statinfo7.configure(text = var.stat_info3)
+				statinfo8.configure(text = var.stat_extra5)
+				statinfo9.configure(text = var.stat_extra6)
+			except:
+				pass
+		if number == 3:
+			regraph()
 
 
 
@@ -312,6 +313,32 @@ canvas.draw()
 canvas.get_tk_widget().grid(column=1, row= 7)
 canvas._tkcanvas.grid(column=1, row= 7)
 
+#Graph Redraw
+def regraph():
+	canvas = FigureCanvasTkAgg(fig, master=page2)
+	a.clear()
+	global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
+	showDet.get()
+	c1 = 'orange'
+	c2 = 'blue'
+	c3 = 'green'
+	det_plot1, = a.plot(x, x1, label='Determination')
+	crit_plot1, = a.plot(y, y1, label='Crit')
+	direct_plot1, = a.plot(z, z1, label='Direct')
+	ten_plot1, = a.plot(t, t1, label='Tenacity')
+	s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
+	ps1 = a.scatter(var.d1[0],var.d1[1],40,c1, label=var.stat_info1)
+	ps2 = a.scatter(var.d2[0],var.d2[1],40,c2, label=var.stat_info2)
+	ps3 = a.scatter(var.d3[0],var.d3[1],40,c3, label=var.stat_info3)
+	a.set_title('Stats')
+	a.set_xlabel('Materia')
+	a.set_ylabel('Modifier')
+	a.grid()
+	a.legend()
+	canvas.draw()
+
+
+
 #Show Stat Button
 Checkbutton(page2, text="Determination", variable=showDet, command=stat_state).place(x=780, y=200)
 Checkbutton(page2, text="Crit", variable=showCrit, command=stat_state1).place(x=780, y=220)
@@ -367,7 +394,7 @@ Checkbutton(page2, text="S Speed", variable=showS, command=stat_state4).place(x=
 
 
 
-button2 = Button(page2, text="Calculate", command = lambda number = 2: callback(number) )
+button2 = Button(page2, text="Calculate", command = lambda number = 2: Callback.callback(number) )
 #button2.place(x=380, y=90)
 button2.grid(column=4, row= 4)
 
@@ -376,7 +403,7 @@ button2.grid(column=4, row= 4)
 button3 = Button(page1, text="Save", command = func.savestats)
 button3.place(x=150, y=68)
 
-button4 = Button(page1, text="Load", command =lambda number = 1 : callback(number))
+button4 = Button(page1, text="Load", command =lambda number = 1 : Callback.callback(number))
 button4.place(x=125, y=98)
 
 ######################################## Tab 3 - Gear Comparison ########################################

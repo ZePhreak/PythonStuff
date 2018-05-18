@@ -64,13 +64,10 @@ def stat_extrapolate():
 			var.stat_info3 = stat_info3
 			var.stat_extra5 = stat_extra5
 			var.stat_extra6 = stat_extra6
-			scatter()
+			Callback.callback(3)
 
 def scatter():
 	print("Scatter Called")
-	d1 = (var.stat_extra2, var.stat_extra1)
-	d2 = (var.stat_extra4, var.stat_extra3)
-	d3 = (var.stat_extra6, var.stat_extra5)
 	var.legend([])
 	##########Lazy Colour Set#######
 	if stat_info1 == 'Crit':
@@ -92,20 +89,3 @@ def scatter():
 	if stat_info3 == 'Direct Hit':
 		c3 = 'green'
 	##########Lazy Colour Set End#######
-	a.clear()
-	global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
-	showDet.get()
-	det_plot1, = a.plot(x, x1, label='Determination')
-	crit_plot1, = a.plot(y, y1, label='Crit')
-	direct_plot1, = a.plot(z, z1, label='Direct')
-	ten_plot1, = a.plot(t, t1, label='Tenacity')
-	s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
-	ps1 = a.scatter(d1[0],d1[1],40,c1, label=stat_info1)
-	ps2 = a.scatter(d2[0],d2[1],40,c2, label=stat_info2)
-	ps3 = a.scatter(d3[0],d3[1],40,c3, label=stat_info3)
-	a.set_title('Stats')
-	a.set_xlabel('Materia')
-	a.set_ylabel('Modifier')
-	a.grid()
-	a.legend()
-	canvas.draw()

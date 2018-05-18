@@ -20,3 +20,6 @@ showCrit = 1
 showDirect = 1
 showTen = 1
 showS = 1
+d1 = (stat_extra2, stat_extra1)
+d2 = (stat_extra4, stat_extra3)
+d3 = (stat_extra6, stat_extra5)
