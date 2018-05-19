@@ -58,14 +58,14 @@ def stat_extrapolate():
 			var.stat_extra3 = stat_extra3
 			var.stat_extra4 = stat_extra4
 		if i == 2:
-			from gui3 import callback
+			import gui3
 			stat_extra5 = bestmults[beststat_ind]
 			stat_extra6 = beststat_val
 			stat_info3 = stats[beststat_ind]
 			var.stat_info3 = stat_info3
 			var.stat_extra5 = stat_extra5
 			var.stat_extra6 = stat_extra6
-			callback(3)
+			gui3.callback(3)
 
 def scatter():
 	print("Scatter Called")
