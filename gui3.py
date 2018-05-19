@@ -50,34 +50,8 @@ stat_info3 = 0
 data_list = ['det3.csv','crit.csv','direct.csv','tenacity.csv','ss.csv']
 datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 
-#Callback
-def callback(number):
-	import var
-	if number == 1:
-		print('Load Stats Called')
-		global lbl4, lbl5, lbl6
-		func.loadstats()
-		lbl4.configure(text = var.p_det)
-		lbl5.configure(text = var.p_direct)
-		lbl6.configure(text = var.p_crit)
-	if number == 2:
-		try:
-			print('Stat Extrapolate Called')
-			statext.stat_extrapolate()
-			statinfo1.configure(text = var.stat_info1)
-			statinfo2.configure(text = var.stat_extra1)
-			statinfo3.configure(text = var.stat_extra2)
-			statinfo4.configure(text = var.stat_info2)
-			statinfo5.configure(text = var.stat_extra3)
-			statinfo6.configure(text = var.stat_extra4)
-			statinfo7.configure(text = var.stat_info3)
-			statinfo8.configure(text = var.stat_extra5)
-			statinfo9.configure(text = var.stat_extra6)
-		except:
-			pass
-	if number == 3:
-		print('Regraph Called')
-		regraph()
+
+
 
 #Main Protected
 def gui():
@@ -143,6 +117,9 @@ def gui():
 	lbl5.grid(column=5, row=1)
 	lbl6 = Label(page1, text = 'Waiting...')
 	lbl6.grid(column=5, row=2)
+	gui.lbl4 = lbl4
+	gui.lbl5 = lbl5
+	gui.lbl6 = lbl6
 
 	######################################## Tab 2 ########################################
 	page2 = ttk.Frame(nb)
@@ -313,6 +290,7 @@ def gui():
 
 	#Graph Redraw
 	def regraph():
+		import var
 		print('regraphing')
 		a.clear()
 		global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
@@ -333,7 +311,7 @@ def gui():
 		a.grid()
 		a.legend()
 		canvas.draw()
-
+	gui.regraph = regraph()
 
 
 	#Show Stat Button
@@ -558,6 +536,36 @@ def gui():
 
 	master.iconbitmap(r'data\jump.ico')
 	mainloop()
+
+global lbl4, lbl5, lbl6
+#Callback
+def callback(number):
+	import var
+	if number == 1:
+		print('Load Stats Called')
+		func.loadstats()
+		gui.lbl4.configure(text = var.p_det)
+		gui.lbl5.configure(text = var.p_direct)
+		gui.lbl6.configure(text = var.p_crit)
+	if number == 2:
+		try:
+			print('Stat Extrapolate Called')
+			statext.stat_extrapolate()
+			statinfo1.configure(text = var.stat_info1)
+			statinfo2.configure(text = var.stat_extra1)
+			statinfo3.configure(text = var.stat_extra2)
+			statinfo4.configure(text = var.stat_info2)
+			statinfo5.configure(text = var.stat_extra3)
+			statinfo6.configure(text = var.stat_extra4)
+			statinfo7.configure(text = var.stat_info3)
+			statinfo8.configure(text = var.stat_extra5)
+			statinfo9.configure(text = var.stat_extra6)
+		except:
+			pass
+	if number == 3:
+		print('Regraph Called')
+		gui.regraph()
+
 
 #End
 if __name__ == "__main__":
