@@ -54,7 +54,8 @@ datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
 
 
 #Main Protected
-def gui():
+def gui(rgraph=False):
+	import var
 	#MainApp
 	master = Tk()
 	master.title("FFXIV Quick Math")
@@ -189,22 +190,22 @@ def gui():
 	#button1.grid(column=1, row= 4)
 
 	#Graph Stat Extrapolation
-	fig = plt.Figure(figsize=(5.5, 5), dpi=100)
-	global a
-	a = fig.add_subplot(111)
-	x = datafile[0][0]
-	x1 = datafile[0][1]
-	y = datafile[1][0]
-	y1 = datafile[1][1]
-	z = datafile[2][0]
-	z1 = datafile[2][1]
-	t = datafile[3][0]
-	t1 = datafile[3][1]
-	s = datafile[4][0]
-	s1 = datafile[4][1]
-	global canvas
-	canvas = FigureCanvasTkAgg(fig, master=page2)
-	plt.ion()
+	#fig = plt.Figure(figsize=(5.5, 5), dpi=100)
+	#global a
+	#a = fig.add_subplot(111)
+	#x = datafile[0][0]
+	#x1 = datafile[0][1]
+	#y = datafile[1][0]
+	#y1 = datafile[1][1]
+	#z = datafile[2][0]
+	#z1 = datafile[2][1]
+	#t = datafile[3][0]
+	#t1 = datafile[3][1]
+	#s = datafile[4][0]
+	#s1 = datafile[4][1]
+	#global canvas
+	#canvas = FigureCanvasTkAgg(fig, master=page2)
+	#plt.ion()
 
 	#Graph Plotting
 	#Checking State
@@ -264,54 +265,57 @@ def gui():
 
 	###########################################################################################
 	#Setting up Graph
-	det_plot, = a.plot(x, x1, label='Determination')
-	crit_plot, = a.plot(y, y1, label='Crit')
-	direct_plot, = a.plot(z, z1, label='Direct')
-	ten_plot, = a.plot(t, t1, label='Tenacity')
-	s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
+	def graph(regraph=0):
+		if regraph == 0:
+			print('initializing graph')
+			global a, canvas, det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1, fig
+			fig = plt.Figure(figsize=(5.5, 5), dpi=100)
+			a = fig.add_subplot(111)
+			x = datafile[0][0]
+			x1 = datafile[0][1]
+			y = datafile[1][0]
+			y1 = datafile[1][1]
+			z = datafile[2][0]
+			z1 = datafile[2][1]
+			t = datafile[3][0]
+			t1 = datafile[3][1]
+			s = datafile[4][0]
+			s1 = datafile[4][1]
+			canvas = FigureCanvasTkAgg(fig, master=page2)
+			det_plot, = a.plot(x, x1, label='Determination')
+			crit_plot, = a.plot(y, y1, label='Crit')
+			direct_plot, = a.plot(z, z1, label='Direct')
+			ten_plot, = a.plot(t, t1, label='Tenacity')
+			s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
+			toolbar_frame = Frame(page2)
+			toolbar_frame.place(x=400,y=600)
+			toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
+			toolbar.update()
+			toolbar.grid(row=9, column=9)
+			plt.ion()
+			a.grid()
+			a.legend()
+			a.set_title('Stats')
+			a.set_xlabel('Materia')
+			a.set_ylabel('Modifier')
+			fig.patch.set_facecolor('#F0F0F0')
+			a.set_facecolor(('#F0F0F0'))
 
-	toolbar_frame = Frame(page2)
-	toolbar_frame.place(x=400,y=600)
-	toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
-	toolbar.update()
-	toolbar.grid(row=9, column=9)
-	a.grid()
-	a.legend()
-	a.set_title('Stats')
-	a.set_xlabel('Materia')
-	a.set_ylabel('Modifier')
-	fig.patch.set_facecolor('#F0F0F0')
-	a.set_facecolor(('#F0F0F0'))
-
-	# a tk.DrawingArea
-	canvas.draw()
-	canvas.get_tk_widget().grid(column=1, row= 7)
-	canvas._tkcanvas.grid(column=1, row= 7)
-
-	#Graph Redraw
-	def regraph():
-		import var
-		print('regraphing')
-		a.clear()
-		global det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1
-		c1 = 'orange'
-		c2 = 'blue'
-		c3 = 'green'
-		det_plot1, = a.plot(x, x1, label='Determination')
-		crit_plot1, = a.plot(y, y1, label='Crit')
-		direct_plot1, = a.plot(z, z1, label='Direct')
-		ten_plot1, = a.plot(t, t1, label='Tenacity')
-		s_plot1, = a.plot(s, s1, label="Skill/Spell Speed")
-		ps1 = a.scatter(var.d1[0],var.d1[1],40,c1, label=var.stat_info1)
-		ps2 = a.scatter(var.d2[0],var.d2[1],40,c2, label=var.stat_info2)
-		ps3 = a.scatter(var.d3[0],var.d3[1],40,c3, label=var.stat_info3)
-		a.set_title('Stats')
-		a.set_xlabel('Materia')
-		a.set_ylabel('Modifier')
-		a.grid()
-		a.legend()
-		canvas.draw()
-	gui.regraph = regraph()
+			# a tk.DrawingArea
+			canvas.draw()
+			canvas.get_tk_widget().grid(column=1, row= 7)
+			canvas._tkcanvas.grid(column=1, row= 7)
+		if regraph == 1:
+			fig.a.clear()
+			c1 = 'orange'
+			c2 = 'blue'
+			c3 = 'green'
+			ps1 = a.scatter(var.d1[0],var.d1[1],40,c1, label=var.stat_info1)
+			ps2 = a.scatter(var.d2[0],var.d2[1],40,c2, label=var.stat_info2)
+			ps3 = a.scatter(var.d3[0],var.d3[1],40,c3, label=var.stat_info3)
+			canvas.draw()
+		else:
+			pass
 
 
 	#Show Stat Button
@@ -534,7 +538,14 @@ def gui():
 	w = OptionMenu(page4, var, *Classes, command=Class)
 	w.grid(row=0,column=0)
 
+	if rgraph:
+		print('gui regraphing')
+		graph(1)
+		print('gui regraphing ended')
+	else:
+		pass
 	master.iconbitmap(r'data\jump.ico')
+	graph(0)
 	mainloop()
 
 global lbl4, lbl5, lbl6
@@ -564,7 +575,7 @@ def callback(number):
 			pass
 	if number == 3:
 		print('Regraph Called')
-		gui.regraph()
+		gui(True)
 
 
 #End
