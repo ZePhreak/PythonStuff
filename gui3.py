@@ -271,6 +271,7 @@ def gui(rgraph=False):
 			global a, canvas, det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1, fig
 			fig = plt.Figure(figsize=(5.5, 5), dpi=100)
 			a = fig.add_subplot(111)
+			canvas = FigureCanvasTkAgg(fig, master=page2)
 			x = datafile[0][0]
 			x1 = datafile[0][1]
 			y = datafile[1][0]
@@ -281,7 +282,6 @@ def gui(rgraph=False):
 			t1 = datafile[3][1]
 			s = datafile[4][0]
 			s1 = datafile[4][1]
-			canvas = FigureCanvasTkAgg(fig, master=page2)
 			det_plot, = a.plot(x, x1, label='Determination')
 			crit_plot, = a.plot(y, y1, label='Crit')
 			direct_plot, = a.plot(z, z1, label='Direct')
@@ -306,7 +306,7 @@ def gui(rgraph=False):
 			canvas.get_tk_widget().grid(column=1, row= 7)
 			canvas._tkcanvas.grid(column=1, row= 7)
 		if regraph == 1:
-			fig.a.clear()
+			a.clear()
 			c1 = 'orange'
 			c2 = 'blue'
 			c3 = 'green'
