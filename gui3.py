@@ -224,11 +224,11 @@ def gui(rgraph=False):
 	s = datafile[4][0]
 	s1 = datafile[4][1]
 	canvas = FigureCanvasTkAgg(fig, master=page2)
-	det_plot, = a.plot(x, x1, label='Determination')
-	crit_plot, = a.plot(y, y1, label='Crit')
-	direct_plot, = a.plot(z, z1, label='Direct')
-	ten_plot, = a.plot(t, t1, label='Tenacity')
-	s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
+	det_plot, = a.step(x, x1, label='Determination')
+	crit_plot, = a.step(y, y1, label='Crit')
+	direct_plot, = a.step(z, z1, label='Direct')
+	ten_plot, = a.step(t, t1, label='Tenacity')
+	s_plot, = a.step(s, s1, label="Skill/Spell Speed")
 
 	#Setting up Graph
 	def graph(regraph=0):
