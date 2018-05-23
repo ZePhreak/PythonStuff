@@ -1,61 +1,57 @@
-#MainImports
-import func
-import var
-import statext
-#
-from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-import tkinter.ttk as ttk
-import tkinter as tk
-import time
-from tkinter import filedialog
-from tkinter.filedialog import askopenfilename
-from math import *
-import csv
-import numpy as np
-from numpy import arange, sin, pi
-import pickle
-#Graph Imports
-import matplotlib as mpl
-import matplotlib.animation as animation
-import matplotlib.pyplot as plt
-import matplotlib.backends.tkagg as tkagg
-from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2TkAgg)
-from matplotlib.figure import Figure
-import re
-from decimal import *
-mpl.use('TkAgg')
-
-#Variables
-stats = [ "Determination", "Crit", "Direct Hit" ]
-det_data1 = 1
-crit_data1 = 1
-direct_data1 = 1
-det_request = 0
-direct_request = 0
-crit_request = 0
-request6 = 0
-stat_extra1 = 0
-stat_extra2 = 0
-stat_extra3 = 0
-stat_extra4 = 0
-stat_extra5 = 0
-stat_extra6 = 0
-stat_info1 = 0
-stat_info2 = 0
-stat_info3 = 0
-
-#Load CSVS
-data_list = ['det3.csv','crit.csv','direct.csv','tenacity.csv','ss.csv']
-datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
-
-
-
-
 #Main Protected
 def gui(rgraph=False):
+	#MainImports
+	import func
 	import var
+	import statext
+	#
+	from tkinter import Tk
+	from tkinter import ttk
+	from tkinter import messagebox
+	import tkinter.ttk as ttk
+	import tkinter as tk
+	import time
+	from tkinter import filedialog
+	from tkinter.filedialog import askopenfilename
+	#from math import *
+	import csv
+	import numpy as np
+	from numpy import arange, sin, pi
+	import pickle
+	#Graph Imports
+	import matplotlib as mpl
+	import matplotlib.animation as animation
+	import matplotlib.pyplot as plt
+	import matplotlib.backends.tkagg as tkagg
+	from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg, NavigationToolbar2TkAgg)
+	from matplotlib.figure import Figure
+	import re
+	#from decimal import *
+	mpl.use('TkAgg')
+
+	#Variables
+	stats = [ "Determination", "Crit", "Direct Hit" ]
+	det_data1 = 1
+	crit_data1 = 1
+	direct_data1 = 1
+	det_request = 0
+	direct_request = 0
+	crit_request = 0
+	request6 = 0
+	stat_extra1 = 0
+	stat_extra2 = 0
+	stat_extra3 = 0
+	stat_extra4 = 0
+	stat_extra5 = 0
+	stat_extra6 = 0
+	stat_info1 = 0
+	stat_info2 = 0
+	stat_info3 = 0
+
+	#Load CSVS
+	data_list = ['det3.csv','crit.csv','direct.csv','tenacity.csv','ss.csv']
+	datafile = [np.loadtxt(file, delimiter=",") for file in data_list]
+
 	#MainApp
 	master = Tk()
 	master.title("FFXIV Quick Math")
@@ -78,15 +74,15 @@ def gui(rgraph=False):
 	nb.add(page1, text='Character Stats')
 
 	#Start showing info
-	Label(page1, text="Determination:", anchor="e", width=12).grid(row=0)
-	Label(page1, text="Direct Hit:", anchor="e", width=12).grid(row=1)
-	Label(page1, text="Critical Hit:", anchor="e", width=12).grid(row=2)
+	tk.Label(page1, text="Determination:", anchor="e", width=12).grid(row=0)
+	tk.Label(page1, text="Direct Hit:", anchor="e", width=12).grid(row=1)
+	tk.Label(page1, text="Critical Hit:", anchor="e", width=12).grid(row=2)
 
-	e1 = Entry(page1)
+	e1 = tk.Entry(page1)
 	e1.grid(row=0, column=1)
-	e2 = Entry(page1)
+	e2 = tk.Entry(page1)
 	e2.grid(row=1, column=1)
-	e3 = Entry(page1)
+	e3 = tk.Entry(page1)
 	e3.grid(row=2, column=1)
 
 
@@ -100,23 +96,23 @@ def gui(rgraph=False):
 		var.p_crit = e3.get()
 		lbl6.configure(text = var.p_crit)
 
-	button = Button(page1, text="Update", command = showstats)
+	button = tk.Button(page1, text="Update", command = showstats)
 	button.place(x=100, y=68)
 	#button.grid(column=3, row= 1)
 
 	#Setting Stat Info Block
 	#Show Stat Block
-	lbl1 = Label(page1, text = 'Determination:', anchor="e", width=12)
+	lbl1 = tk.Label(page1, text = 'Determination:', anchor="e", width=12)
 	lbl1.grid(column=4, row=0)
-	lbl2 = Label(page1, text = 'Direct Hit:', anchor="e", width=12)
+	lbl2 = tk.Label(page1, text = 'Direct Hit:', anchor="e", width=12)
 	lbl2.grid(column=4, row=1)
-	lbl3 = Label(page1, text = 'Critical Hit:', anchor="e", width=12)
+	lbl3 = tk.Label(page1, text = 'Critical Hit:', anchor="e", width=12)
 	lbl3.grid(column=4, row=2)
-	lbl4 = Label(page1, text = 'Waiting...')
+	lbl4 = tk.Label(page1, text = 'Waiting...')
 	lbl4.grid(column=5, row=0)
-	lbl5 = Label(page1, text = 'Waiting...')
+	lbl5 = tk.Label(page1, text = 'Waiting...')
 	lbl5.grid(column=5, row=1)
-	lbl6 = Label(page1, text = 'Waiting...')
+	lbl6 = tk.Label(page1, text = 'Waiting...')
 	lbl6.grid(column=5, row=2)
 	gui.lbl4 = lbl4
 	gui.lbl5 = lbl5
@@ -126,17 +122,17 @@ def gui(rgraph=False):
 	page2 = ttk.Frame(nb)
 	nb.add(page2, text='Stat Extrapolation')
 	#Input Variables
-	p = PanedWindow(page2, bg="grey", borderwidth=1, height=85, orient=VERTICAL)
+	p = tk.PanedWindow(page2, bg="grey", borderwidth=1, height=85, orient=tk.VERTICAL)
 	p.grid(row=0, column=0)
-	Label(p, text="Max Determination:", anchor="e", width=15).grid(row=0)
-	Label(p, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
-	Label(p, text="Max Critical Hit:", anchor="e", width=15).grid(row=2)
-	Label(p, text="Max Stat Meld:", anchor="e", width=15).grid(row=3)
+	tk.Label(p, text="Max Determination:", anchor="e", width=15).grid(row=0)
+	tk.Label(p, text="Max Direct Hit:", anchor="e", width=15).grid(row=1)
+	tk.Label(p, text="Max Critical Hit:", anchor="e", width=15).grid(row=2)
+	tk.Label(p, text="Max Stat Meld:", anchor="e", width=15).grid(row=3)
 
-	e4 = Entry(p)
-	e5 = Entry(p)
-	e6 = Entry(p)
-	e7 = Entry(p)
+	e4 = tk.Entry(p)
+	e5 = tk.Entry(p)
+	e6 = tk.Entry(p)
+	e7 = tk.Entry(p)
 
 	e4.grid(row=0, column=1)
 	e5.grid(row=1, column=1)
@@ -145,37 +141,37 @@ def gui(rgraph=False):
 
 	#Extrapolation Info Output
 	#Info
-	p2 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
+	p2 = tk.PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
 	p2.grid(row=0, column=2)
-	Label(p2, text = "Stat: ", anchor="e", width=10).grid(row=0, column=2)
-	Label(p2, text = "Multiplier: ", anchor="e", width=10).grid(row=1, column=2)
-	Label(p2, text = "Materia: ", anchor="e", width=10).grid(row=2, column=2)
+	tk.Label(p2, text = "Stat: ", anchor="e", width=10).grid(row=0, column=2)
+	tk.Label(p2, text = "Multiplier: ", anchor="e", width=10).grid(row=1, column=2)
+	tk.Label(p2, text = "Materia: ", anchor="e", width=10).grid(row=2, column=2)
 	#1st Stat
-	p1 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
+	p1 = tk.PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
 	p1.grid(row=0, column=3)
-	statinfo1 = Label(p1, text ="Waiting...", anchor="w", width=12)
+	statinfo1 = tk.Label(p1, text ="Waiting...", anchor="w", width=12)
 	statinfo1.grid(row=0, column=3)
-	statinfo2 = Label(p1, text ="Waiting...", anchor="w", width=12)
+	statinfo2 = tk.Label(p1, text ="Waiting...", anchor="w", width=12)
 	statinfo2.grid(row=1, column=3)
-	statinfo3 = Label(p1, text ="Waiting...", anchor="w", width=12)
+	statinfo3 = tk.Label(p1, text ="Waiting...", anchor="w", width=12)
 	statinfo3.grid(row=2, column=3)
 	#2nd Stat
-	p3 = PanedWindow(page2, bg="grey", borderwidth=1, orient=VERTICAL)
+	p3 = tk.PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
 	p3.grid(row=0, column=4)
-	statinfo4 = Label(p3, text ="Waiting...", anchor="w", width=12)
+	statinfo4 = tk.Label(p3, text ="Waiting...", anchor="w", width=12)
 	statinfo4.grid(row=0, column=4)
-	statinfo5 = Label(p3, text ="Waiting...", anchor="w", width=12)
+	statinfo5 = tk.Label(p3, text ="Waiting...", anchor="w", width=12)
 	statinfo5.grid(row=1, column=4)
-	statinfo6 = Label(p3, text ="Waiting...", anchor="w", width=12)
+	statinfo6 = tk.Label(p3, text ="Waiting...", anchor="w", width=12)
 	statinfo6.grid(row=2, column=4)
 	#3rd Stat
-	p4 = PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
+	p4 = tk.PanedWindow(page2, bg="grey", borderwidth=1, orient=tk.VERTICAL)
 	p4.grid(row=0, column=5)
-	statinfo7 = Label(p4, text ="Waiting...", anchor="w", width=12)
+	statinfo7 = tk.Label(p4, text ="Waiting...", anchor="w", width=12)
 	statinfo7.grid(row=0, column=5)
-	statinfo8 = Label(p4, text ="Waiting...", anchor="w", width=12)
+	statinfo8 = tk.Label(p4, text ="Waiting...", anchor="w", width=12)
 	statinfo8.grid(row=1, column=5)
-	statinfo9 = Label(p4, text ="Waiting...", anchor="w", width=12)
+	statinfo9 = tk.Label(p4, text ="Waiting...", anchor="w", width=12)
 	statinfo9.grid(row=2, column=5)
 
 	def showstats1():
@@ -185,7 +181,7 @@ def gui(rgraph=False):
 		var.crit_request = e6.get()
 		var.request6 = e7.get()
 
-	button1 = Button(page2, text="Update", command = showstats1)
+	button1 = tk.Button(page2, text="Update", command = showstats1)
 	button1.place(x=100, y=90)
 	#button1.grid(column=1, row= 4)
 
@@ -209,14 +205,68 @@ def gui(rgraph=False):
 
 	#Graph Plotting
 	#Checking State
-	global showDet, showCrit, showDirect, showTen, showS
-	showDet = IntVar(value=1)
-	showCrit = IntVar(value=1)
-	showDirect = IntVar(value=1)
-	showTen = IntVar(value=1)
-	showS = IntVar(value=1)
+	global showDet, showCrit, showDirect, showTen, showS, a, canvas, det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1, fig
+	showDet = tk.IntVar(value=1)
+	showCrit = tk.IntVar(value=1)
+	showDirect = tk.IntVar(value=1)
+	showTen = tk.IntVar(value=1)
+	showS = tk.IntVar(value=1)
+	fig = plt.Figure(figsize=(5.5, 5), dpi=100)
+	a = fig.add_subplot(111)
+	x = datafile[0][0]
+	x1 = datafile[0][1]
+	y = datafile[1][0]
+	y1 = datafile[1][1]
+	z = datafile[2][0]
+	z1 = datafile[2][1]
+	t = datafile[3][0]
+	t1 = datafile[3][1]
+	s = datafile[4][0]
+	s1 = datafile[4][1]
+	canvas = FigureCanvasTkAgg(fig, master=page2)
+	det_plot, = a.plot(x, x1, label='Determination')
+	crit_plot, = a.plot(y, y1, label='Crit')
+	direct_plot, = a.plot(z, z1, label='Direct')
+	ten_plot, = a.plot(t, t1, label='Tenacity')
+	s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
 
-
+	#Setting up Graph
+	def graph(regraph=0):
+		if regraph == 0:
+			print('initializing graph')
+			#det_plot, = a.plot(x, x1, label='Determination')
+			#crit_plot, = a.plot(y, y1, label='Crit')
+			#direct_plot, = a.plot(z, z1, label='Direct')
+			#ten_plot, = a.plot(t, t1, label='Tenacity')
+			#s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
+			toolbar_frame = ttk.Frame(page2)
+			toolbar_frame.place(x=400,y=600)
+			toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
+			toolbar.update()
+			toolbar.grid(row=9, column=9)
+			plt.ion()
+			a.grid()
+			a.legend()
+			a.set_title('Stats')
+			a.set_xlabel('Materia')
+			a.set_ylabel('Modifier')
+			fig.patch.set_facecolor('#F0F0F0')
+			a.set_facecolor(('#F0F0F0'))
+			canvas.get_tk_widget().grid(column=1, row= 7)
+			canvas._tkcanvas.grid(column=1, row= 7)
+			canvas.draw()
+		if regraph == 1:
+			print('Clearing')
+			fig.clear()
+			c1 = 'orange'
+			c2 = 'blue'
+			c3 = 'green'
+			ps1 = a.scatter(var.d1[0],var.d1[1],40,c1, label=var.stat_info1)
+			ps2 = a.scatter(var.d2[0],var.d2[1],40,c2, label=var.stat_info2)
+			ps3 = a.scatter(var.d3[0],var.d3[1],40,c3, label=var.stat_info3)
+			canvas.draw()
+		else:
+			pass
 	#State of Checkboxes (CLEAN UP)################################################################
 	def stat_state():
 		det_plot.set_visible(not det_plot.get_visible())
@@ -262,68 +312,14 @@ def gui(rgraph=False):
 			pass
 		a.legend()
 		canvas.draw()
-
 	###########################################################################################
-	#Setting up Graph
-	def graph(regraph=0):
-		if regraph == 0:
-			print('initializing graph')
-			global a, canvas, det_plot1, crit_plot1, direct_plot1, ten_plot1, s_plot1, fig
-			fig = plt.Figure(figsize=(5.5, 5), dpi=100)
-			a = fig.add_subplot(111)
-			canvas = FigureCanvasTkAgg(fig, master=page2)
-			x = datafile[0][0]
-			x1 = datafile[0][1]
-			y = datafile[1][0]
-			y1 = datafile[1][1]
-			z = datafile[2][0]
-			z1 = datafile[2][1]
-			t = datafile[3][0]
-			t1 = datafile[3][1]
-			s = datafile[4][0]
-			s1 = datafile[4][1]
-			det_plot, = a.plot(x, x1, label='Determination')
-			crit_plot, = a.plot(y, y1, label='Crit')
-			direct_plot, = a.plot(z, z1, label='Direct')
-			ten_plot, = a.plot(t, t1, label='Tenacity')
-			s_plot, = a.plot(s, s1, label="Skill/Spell Speed")
-			toolbar_frame = Frame(page2)
-			toolbar_frame.place(x=400,y=600)
-			toolbar = NavigationToolbar2TkAgg(canvas, toolbar_frame)
-			toolbar.update()
-			toolbar.grid(row=9, column=9)
-			plt.ion()
-			a.grid()
-			a.legend()
-			a.set_title('Stats')
-			a.set_xlabel('Materia')
-			a.set_ylabel('Modifier')
-			fig.patch.set_facecolor('#F0F0F0')
-			a.set_facecolor(('#F0F0F0'))
-
-			# a tk.DrawingArea
-			canvas.draw()
-			canvas.get_tk_widget().grid(column=1, row= 7)
-			canvas._tkcanvas.grid(column=1, row= 7)
-		if regraph == 1:
-			a.clear()
-			c1 = 'orange'
-			c2 = 'blue'
-			c3 = 'green'
-			ps1 = a.scatter(var.d1[0],var.d1[1],40,c1, label=var.stat_info1)
-			ps2 = a.scatter(var.d2[0],var.d2[1],40,c2, label=var.stat_info2)
-			ps3 = a.scatter(var.d3[0],var.d3[1],40,c3, label=var.stat_info3)
-			canvas.draw()
-		else:
-			pass
-
 
 	#Show Stat Button
-	Checkbutton(page2, text="Determination", variable=showDet, command=stat_state).place(x=780, y=200)
-	Checkbutton(page2, text="Crit", variable=showCrit, command=stat_state1).place(x=780, y=220)
-	Checkbutton(page2, text="Direct", variable=showDirect, command=stat_state2).place(x=780, y=240)
-	Checkbutton(page2, text="Tenacity", variable=showTen, command=stat_state3).place(x=780, y=260)
-	Checkbutton(page2, text="S Speed", variable=showS, command=stat_state4).place(x=780, y=280)
+	tk.Checkbutton(page2, text="Determination", variable=showDet, command=stat_state).place(x=780, y=200)
+	tk.Checkbutton(page2, text="Crit", variable=showCrit, command=stat_state1).place(x=780, y=220)
+	tk.Checkbutton(page2, text="Direct", variable=showDirect, command=stat_state2).place(x=780, y=240)
+	tk.Checkbutton(page2, text="Tenacity", variable=showTen, command=stat_state3).place(x=780, y=260)
+	tk.Checkbutton(page2, text="S Speed", variable=showS, command=stat_state4).place(x=780, y=280)
 
 
 
@@ -373,62 +369,62 @@ def gui(rgraph=False):
 
 
 
-	button2 = Button(page2, text="Calculate", command = lambda number = 2: callback(number) )
+	button2 = tk.Button(page2, text="Calculate", command = lambda number = 2: callback(number) )
 	#button2.place(x=380, y=90)
 	button2.grid(column=4, row= 4)
 
 
 	#Load and Save Buttons
-	button3 = Button(page1, text="Save", command = func.savestats)
+	button3 = tk.Button(page1, text="Save", command = func.savestats)
 	button3.place(x=150, y=68)
 
-	button4 = Button(page1, text="Load", command =lambda number = 1 : callback(number))
+	button4 = tk.Button(page1, text="Load", command =lambda number = 1 : callback(number))
 	button4.place(x=125, y=98)
 
 	######################################## Tab 3 - Gear Comparison ########################################
 	page3 = ttk.Frame(nb)
 	nb.add(page3, text='Gear Comparison')
 
-	Label(page3, text="Item 1", width=12).grid(row=0)
-	Label(page3, text="Item 2", width=12).grid(row=0, column=2)
-	Label(page3, text="Attack Power", width=12).grid(row=1, column=1)
-	Label(page3, text="Determination", width=12).grid(row=2, column=1)
-	Label(page3, text="Direct Hit", width=12).grid(row=3, column=1)
-	Label(page3, text="Critical Hit", width=12).grid(row=4, column=1)
-	Label(page3, text="S Speed", width=12).grid(row=5, column=1)
+	tk.Label(page3, text="Item 1", width=12).grid(row=0)
+	tk.Label(page3, text="Item 2", width=12).grid(row=0, column=2)
+	tk.Label(page3, text="Attack Power", width=12).grid(row=1, column=1)
+	tk.Label(page3, text="Determination", width=12).grid(row=2, column=1)
+	tk.Label(page3, text="Direct Hit", width=12).grid(row=3, column=1)
+	tk.Label(page3, text="Critical Hit", width=12).grid(row=4, column=1)
+	tk.Label(page3, text="S Speed", width=12).grid(row=5, column=1)
 
 	#Item 1
-	ap = IntVar()
-	ap1 = IntVar()
-	det = IntVar()
-	det1 = IntVar()
-	dh = IntVar()
-	dh1 = IntVar()
-	ch = IntVar()
-	ch1 = IntVar()
-	ss = IntVar()
-	ss1 = IntVar()
-	Entry(page3, textvariable=ap).grid(row=1)
-	Entry(page3, textvariable=det).grid(row=2)
-	Entry(page3, textvariable=dh).grid(row=3)
-	Entry(page3, textvariable=ch).grid(row=4)
-	Entry(page3, textvariable=ss).grid(row=5)
+	ap = tk.IntVar()
+	ap1 = tk.IntVar()
+	det = tk.IntVar()
+	det1 = tk.IntVar()
+	dh = tk.IntVar()
+	dh1 = tk.IntVar()
+	ch = tk.IntVar()
+	ch1 = tk.IntVar()
+	ss = tk.IntVar()
+	ss1 = tk.IntVar()
+	tk.Entry(page3, textvariable=ap).grid(row=1)
+	tk.Entry(page3, textvariable=det).grid(row=2)
+	tk.Entry(page3, textvariable=dh).grid(row=3)
+	tk.Entry(page3, textvariable=ch).grid(row=4)
+	tk.Entry(page3, textvariable=ss).grid(row=5)
 
 	#Item 2
-	Entry(page3, textvariable=ap1).grid(row=1, column=2)
-	Entry(page3, textvariable=det1).grid(row=2, column=2)
-	Entry(page3, textvariable=dh1).grid(row=3, column=2)
-	Entry(page3, textvariable=ch1).grid(row=4, column=2)
-	Entry(page3, textvariable=ss1).grid(row=5, column=2)
+	tk.Entry(page3, textvariable=ap1).grid(row=1, column=2)
+	tk.Entry(page3, textvariable=det1).grid(row=2, column=2)
+	tk.Entry(page3, textvariable=dh1).grid(row=3, column=2)
+	tk.Entry(page3, textvariable=ch1).grid(row=4, column=2)
+	tk.Entry(page3, textvariable=ss1).grid(row=5, column=2)
 
 	#More Damage
-	Label(page3, text="Item 1", width=12).grid(row=0)
-	Label(page3, text="Item 2", width=12).grid(row=0, column=2)
-	Label(page3, text="Attack Power", width=12).grid(row=1, column=1)
-	Label(page3, text="Determination", width=12).grid(row=2, column=1)
-	Label(page3, text="Direct Hit", width=12).grid(row=3, column=1)
-	Label(page3, text="Critical Hit", width=12).grid(row=4, column=1)
-	Label(page3, text="S Speed", width=12).grid(row=5, column=1)
+	tk.Label(page3, text="Item 1", width=12).grid(row=0)
+	tk.Label(page3, text="Item 2", width=12).grid(row=0, column=2)
+	tk.Label(page3, text="Attack Power", width=12).grid(row=1, column=1)
+	tk.Label(page3, text="Determination", width=12).grid(row=2, column=1)
+	tk.Label(page3, text="Direct Hit", width=12).grid(row=3, column=1)
+	tk.Label(page3, text="Critical Hit", width=12).grid(row=4, column=1)
+	tk.Label(page3, text="S Speed", width=12).grid(row=5, column=1)
 
 	#Math
 	jobmod = 2170
@@ -478,18 +474,18 @@ def gui(rgraph=False):
 		aplb2.configure(text=DH_Inc)
 		aplb3.configure(text=C_Inc)
 
-	aplb = Label(page3, text='Waiting', width=12)
+	aplb = tk.Label(page3, text='Waiting', width=12)
 	aplb.grid(row=1, column=3)
-	aplb1 = Label(page3, text='Waiting', width=12)
+	aplb1 = tk.Label(page3, text='Waiting', width=12)
 	aplb1.grid(row=2, column=3)
-	aplb2 = Label(page3, text='Waiting', width=12)
+	aplb2 = tk.Label(page3, text='Waiting', width=12)
 	aplb2.grid(row=3, column=3)
-	aplb3 = Label(page3, text='Waiting', width=12)
+	aplb3 = tk.Label(page3, text='Waiting', width=12)
 	aplb3.grid(row=4, column=3)
 
 
 
-	button = Button(page3, text="Calculate", command = compare_ap)
+	button = tk.Button(page3, text="Calculate", command = compare_ap)
 	button.place(x=135, y=135)
 	######################################## Tab 4 - Rotation Planner ########################################
 	page4 = ttk.Frame(nb)
@@ -498,9 +494,9 @@ def gui(rgraph=False):
 	#Ability Select
 	global Abilities
 	Abilities = ["Waiting for Input"]
-	var1 = StringVar(master)
+	var1 = tk.StringVar(master)
 	var1.set(Abilities[0])
-	w1 = OptionMenu(page4, var1, Abilities)
+	w1 = tk.OptionMenu(page4, var1, Abilities)
 	w1.grid(row=1,column=0)
 
 	# Key-value dictionary with job name, ability list
@@ -528,14 +524,14 @@ def gui(rgraph=False):
 		ability1_search = np.where(ability_data[0] == ability1, ability_data[2], ability_data[1])
 		ability2 = ability1_search[1]
 
-	Label(page4, text=ability2, anchor="e", width=12).grid(row=1, column=1)
+	tk.Label(page4, text=ability2, anchor="e", width=12).grid(row=1, column=1)
 
 
 	#Class Select
 	Classes = ["Bard","Black Mage","Dragoon","Machinist","Monk","Ninja","Red Mage","Samurai","Summoner"]
-	var = StringVar(master)
+	var = tk.StringVar(master)
 	var.set("Pick Class")
-	w = OptionMenu(page4, var, *Classes, command=Class)
+	w = tk.OptionMenu(page4, var, *Classes, command=Class)
 	w.grid(row=0,column=0)
 
 	if rgraph:
@@ -546,12 +542,13 @@ def gui(rgraph=False):
 		pass
 	master.iconbitmap(r'data\jump.ico')
 	graph(0)
-	mainloop()
+	tk.mainloop()
 
 global lbl4, lbl5, lbl6
 #Callback
 def callback(number):
 	import var
+	import func
 	if number == 1:
 		print('Load Stats Called')
 		func.loadstats()
@@ -581,3 +578,5 @@ def callback(number):
 #End
 if __name__ == "__main__":
 	gui()
+else:
+	print('Nope')
